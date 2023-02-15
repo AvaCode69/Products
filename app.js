@@ -1,5 +1,4 @@
-console.log("products starter");
-const url = "https://course-api.com/javascript-store-productss";
+const url = "https://course-api.com/javascript-store-products";
 
 const productDom = document.querySelector(".products-center");
 
@@ -9,10 +8,34 @@ const fetchProducts = async () => {
   try {
     const resp = await fetch(url);
     const data = await resp.json();
-    console.log(data);
+    return data;
   } catch {
     productDom.innerHTML = `<p class="error">There was an Error </p>`;
   }
 };
 
-fetchProducts();
+const displayProducts = (list) => {
+  const productList = list
+    .map((product) => {
+      const { id } = product;
+      const { name: title, price } = product.fields;
+      const { url: img } = product.fields.image[0];
+      const formatPrice = price / 100;
+      return `<a class="single-product" href="product.html">
+    <img src="${img}" class="single-product-img img" title="${title}">
+    <footer>
+    <h5 class="name">${title}</h5>
+    <span class="price">${price}</span>
+    </footer>
+    </a>`;
+    })
+    .join("");
+  productDom.innerHTML = `<div class="products-container">${productList}</div>`;
+};
+
+const start = async () => {
+  const data = await fetchProducts();
+  displayProducts(data);
+};
+
+start();
