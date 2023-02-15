@@ -21,11 +21,11 @@ const displayProducts = (list) => {
       const { name: title, price } = product.fields;
       const { url: img } = product.fields.image[0];
       const formatPrice = price / 100;
-      return `<a class="single-product" href="product.html">
+      return `<a class="single-product" href="product.html?id=${id}">
     <img src="${img}" class="single-product-img img" title="${title}">
     <footer>
     <h5 class="name">${title}</h5>
-    <span class="price">${price}</span>
+    <span class="price">$${formatPrice}</span>
     </footer>
     </a>`;
     })
